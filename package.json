@@ -1,14 +1,10 @@
 {
-  "name": "electron-quick-start",
+  "name": "bootstrap-electron",
   "version": "1.0.1",
   "description": "A minimal Electron application",
   "main": "main.js",
   "scripts": {
     "start": "electron ."
-  },
-  "repository": {
-    "type": "git",
-    "url": "git+https://github.com/electron/electron-quick-start.git"
   },
   "keywords": [
     "Electron",
@@ -17,13 +13,14 @@
     "tutorial",
     "demo"
   ],
-  "author": "GitHub",
-  "license": "CC0-1.0",
-  "devDependencies": {
-    "electron": "~1.6.2"
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/fantasyui-com/bootstrap-electron.git"
   },
+  "author": "",
+  "license": "ISC",
   "bugs": {
-    "url": "https://github.com/electron/electron-quick-start/issues"
+    "url": "https://github.com/fantasyui-com/bootstrap-electron/issues"
   },
-  "homepage": "https://github.com/electron/electron-quick-start#readme"
+  "homepage": "https://github.com/fantasyui-com/bootstrap-electron#readme"
 }
