@@ -26,6 +26,14 @@ document.body.ondrop = (ev) => {
   ee.emit('document-drop', {file})
 }
 
+ee.on('background-color', (data) => {
+  $("body").css({background: data.color})
+});
+
+ee.on('foreground-color', (data) => {
+  $("body").css({color: data.color})
+});
+
 
 
 /* * *
@@ -57,4 +65,25 @@ $(function(){
 
 ee.on('document-drop', (data) => {
   alert('Dropped ' + data.file);
+});
+
+
+
+
+/* * *
+  INTERNAL API EXAMPLE
+* * */
+
+$(function(){
+
+
+  $( "#emitter-example-form" ).submit(function( event ) {
+    const eventName = $( "#event-name-select" ).val();
+    const color = $( "#example-color-input" ).val();
+    console.log((eventName, {color}))
+    ee.emit(eventName, {color})
+    event.preventDefault();
+  });
+
+
 });
