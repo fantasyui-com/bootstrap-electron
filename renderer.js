@@ -105,7 +105,7 @@ var appTitle = new Vue({
 * * */
 
 $(function(){
-  $('title').text(pkg.name);
+  $('title').text(pkg.productName||pkg.name);
 });
 
 
