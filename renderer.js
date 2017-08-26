@@ -8,7 +8,7 @@ const fs = require('fs');
 const path = require('path');
 
 class MyEmitter extends EventEmitter {}
-const ee = new MyEmitter();
+const emitter = new MyEmitter();
 
 
 
@@ -23,14 +23,14 @@ document.ondragover = document.ondrop = (ev) => {
 document.body.ondrop = (ev) => {
   ev.preventDefault()
   const file = ev.dataTransfer.files[0].path;
-  ee.emit('document-drop', {file})
+  emitter.emit('document-drop', {file})
 }
 
-ee.on('background-color', (data) => {
+emitter.on('background-color', (data) => {
   $("body").css({background: data.color})
 });
 
-ee.on('foreground-color', (data) => {
+emitter.on('foreground-color', (data) => {
   $("body").css({color: data.color})
 });
 
@@ -39,6 +39,58 @@ ee.on('foreground-color', (data) => {
 /* * *
   VUE COMPONENT EXAMPLE
 * * */
+
+const store = new Vuex.Store({
+  state: {
+    count: 1
+  },
+  mutations: {
+    increment (state) {
+      state.count++
+    }
+  },
+
+  actions: {
+    incrementAsync ({ commit }) {
+      setInterval(() => {
+        commit('increment')
+      }, 1000)
+    }
+  }
+
+})
+
+const Counter = {
+  template: `<div>{{ count }}</div>`,
+  computed: {
+    count () {
+      return this.$store.state.count
+    }
+  }
+}
+
+const app = new Vue({
+  el: '#app',
+
+  // provide the store using the "store" option.
+  // this will inject the store instance to all child components.
+
+  store,
+
+  components: { Counter },
+
+  template: `
+    <div class="app border border-success p-3 m-3">
+      Vuex Counter: <counter></counter>
+    </div>
+  `
+
+})
+
+store.dispatch({
+  type: 'incrementAsync',
+  amount: 10
+})
 
 var appTitle = new Vue({
   el: '#app-title',
@@ -63,7 +115,7 @@ $(function(){
   INTERNAL API EXAMPLE
 * * */
 
-ee.on('document-drop', (data) => {
+emitter.on('document-drop', (data) => {
   alert('Dropped ' + data.file);
 });
 
@@ -81,7 +133,7 @@ $(function(){
     const eventName = $( "#event-name-select" ).val();
     const color = $( "#example-color-input" ).val();
     console.log((eventName, {color}))
-    ee.emit(eventName, {color})
+    emitter.emit(eventName, {color})
     event.preventDefault();
   });
 
