@@ -1,7 +1,7 @@
 {
   "name": "bootstrap-electron",
   "productName": "Bootstrap Electron",
-  "version": "1.0.8",
+  "version": "1.0.9",
   "description": "Electron+bootstrap+vue application framework",
   "main": "main.js",
   "scripts": {
