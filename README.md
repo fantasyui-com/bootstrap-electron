@@ -2,6 +2,7 @@
 
 Boilerplate that combines the Bootstrap GUI and Electron Application.
 
+![](screenshot-big.png)
 ![](screenshot.png)
 
 ## Usage
