@@ -41,10 +41,44 @@ emitter.on('foreground-color', (data) => {
 * * */
 
 const store = new Vuex.Store({
+
   state: {
-    count: 1
+    count: 1,
+
+    selectedMessageId: 2,
+    messages: [
+       { id: 1, subject:'Renew Domain', text: '...', inbox: true },
+       { id: 2, subject:'New Server Activated', text: '...', inbox: true },
+       { id: 3, subject:'Product Generation Complete', text: '...', inbox: false },
+       { id: 4, subject:'New Company Deployment', text: '...', inbox: false },
+     ]
+
   },
+
+  getters: {
+
+     selectedMessageId: state => {
+       return state.selectedMessageId;
+     },
+
+     inboxMessages: state => {
+       return state.messages.filter(message => message.inbox)
+     },
+
+     inboxMessagesCount: (state, getters) => {
+       return getters.inboxMessages.length
+     },
+
+     getMessageById: (state, getters) => (id) => {
+       return state.messages.find(message => message.id === id)
+     }
+
+   },
+
   mutations: {
+    selectMessage (state, id) {
+      state.selectedMessageId = id;
+    },
     increment (state) {
       state.count++
     }
@@ -72,9 +106,6 @@ const Counter = {
 const app = new Vue({
   el: '#app',
 
-  // provide the store using the "store" option.
-  // this will inject the store instance to all child components.
-
   store,
 
   components: { Counter },
@@ -83,6 +114,84 @@ const app = new Vue({
     <div class="app border border-success p-3 m-3">
       Vuex Counter: <counter></counter>
     </div>
+  `
+
+})
+
+const appInboxMenu = new Vue({
+  el: '#app-inbox-menu',
+
+  store,
+
+  components: { Counter },
+
+  computed: {
+
+     inboxMessage () {
+      return this.$store.getters.getTodoById(this.$store.message);
+    },
+     inboxMessages () {
+      return this.$store.getters.inboxMessages
+    },
+    inboxMessagesCount () {
+      return this.$store.getters.inboxMessagesCount
+    }
+  },
+
+  template: `
+  <div>
+
+    <h5><i class="fa fa-inbox fa-1x text-secondary"></i> Inbox <span class="badge badge-danger">{{inboxMessagesCount}}</span></h5>
+
+     <div class="m-3">
+       <i class="fa fa-inbox text-secondary"></i> Support Questions <span class="badge badge-secondary">9</span>
+     </div>
+
+     <div class="m-3">
+       <i class="fa fa-inbox text-secondary"></i> Accounts Receivable <span class="badge badge-secondary">9</span>
+     </div>
+
+   </div>
+  `
+
+})
+
+const appInbox = new Vue({
+  el: '#app-inbox',
+
+  store,
+
+  components: { Counter },
+
+  methods: {
+    selectMessage (id) {
+      this.$store.commit('selectMessage', id)
+
+    },
+    isActive (message) {
+      return (message.id === this.$store.getters.selectedMessageId);
+    },
+  },
+
+  computed: {
+
+    inboxMessage () {
+      return this.$store.getters.getTodoById(this.$store.message);
+    },
+     inboxMessages () {
+      return this.$store.getters.inboxMessages
+    },
+    inboxMessagesCount () {
+      return this.$store.getters.inboxMessagesCount
+    }
+  },
+
+  template: `
+    <ul class="list-group mb-3">
+      <li v-for="message in inboxMessages" v-bind:class="{ 'list-group-item': true, 'active': isActive(message) } ">
+        <span v-on:click="selectMessage(message.id)" >{{ message.subject }}</span>
+      </li>
+    </ul>
   `
 
 })
