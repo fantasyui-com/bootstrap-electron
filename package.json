@@ -5,7 +5,8 @@
   "description": "Electron+bootstrap+vue application framework",
   "main": "main.js",
   "scripts": {
-    "start": "electron ."
+    "start": "electron .",
+    "save": "git add .; git commit -m 'New Release'; git push; npm version patch; npm publish; git push;"
   },
   "keywords": [
     "Electron",
@@ -18,7 +19,7 @@
     "type": "git",
     "url": "git+https://github.com/fantasyui-com/bootstrap-electron.git"
   },
-  "author": "",
+  "author": "fantasyui.com <fantasyui.com@gmail.com>",
   "license": "ISC",
   "bugs": {
     "url": "https://github.com/fantasyui-com/bootstrap-electron/issues"
